@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.hilt.android)
@@ -38,8 +39,8 @@ android {
             )
         }
         debug {
-//            applicationIdSuffix = ".debug"
-//            versionNameSuffix = "-debug"
+            // applicationIdSuffix = ".debug"
+            // versionNameSuffix = "-debug"
         }
     }
 
@@ -59,7 +60,9 @@ kotlin {
     jvmToolchain(21)
 }
 
-kapt { correctErrorTypes = true }
+kapt {
+    correctErrorTypes = true
+}
 
 dependencies {
     implementation(platform(libs.androidx.compose.bom))
@@ -80,6 +83,8 @@ dependencies {
     implementation(libs.androidx.compose.material.icons.extended)
 
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.serialization.json)
+
     implementation(libs.google.material)
 
     implementation(libs.firebase.auth)
@@ -88,8 +93,7 @@ dependencies {
     implementation(libs.firebase.crashlytics)
 
     implementation(libs.retrofit)
-    implementation(libs.retrofit.converter.gson)
-    implementation(libs.gson)
+    implementation(libs.retrofit.converter.kotlinx.serialization)
     implementation(libs.okhttp)
     implementation(libs.ihsanbal.logging.interceptor)
 

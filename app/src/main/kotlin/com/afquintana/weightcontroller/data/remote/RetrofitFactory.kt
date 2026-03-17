@@ -2,14 +2,22 @@ package com.afquintana.weightcontroller.data.remote
 
 import com.ihsanbal.logging.Level
 import com.ihsanbal.logging.LoggingInterceptor
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.kotlinx.serialization.asConverterFactory
 
 @Singleton
 class RetrofitFactory @Inject constructor() {
+
+    private val networkJson = Json {
+        ignoreUnknownKeys = true
+        explicitNulls = false
+    }
+
     private val okHttpClient: OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(
             LoggingInterceptor.Builder()
@@ -24,6 +32,6 @@ class RetrofitFactory @Inject constructor() {
     val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl("https://example.com/")
         .client(okHttpClient)
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(networkJson.asConverterFactory("application/json".toMediaType()))
         .build()
 }
