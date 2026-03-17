@@ -28,11 +28,17 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.afquintana.weightcontroller.R
@@ -49,30 +55,57 @@ fun AuthScreen(
     onSexChange: (String) -> Unit,
     onToggleMode: () -> Unit,
     onLogin: () -> Unit,
-    onRegister: () -> Unit
+    onRegister: () -> Unit,
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
-    LaunchedEffect(state.errorMessage) { state.errorMessage?.let { snackbarHostState.showSnackbar(it) } }
 
-    Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+    LaunchedEffect(state.errorMessage) {
+        state.errorMessage?.let { snackbarHostState.showSnackbar(it) }
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .imePadding(),
+    ) {
         Column(
-            modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).imePadding().padding(20.dp),
-            verticalArrangement = Arrangement.Center
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(24.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Image(
-                painter = painterResource(id = R.drawable.auth_header),
+                painter = painterResource(id = R.drawable.login_illustration),
                 contentDescription = null,
-                modifier = Modifier.fillMaxWidth().height(220.dp),
-                contentScale = ContentScale.Fit
+                modifier = Modifier.size(180.dp),
+                contentScale = ContentScale.Fit,
             )
+
             Spacer(modifier = Modifier.height(16.dp))
-            Text("Weight Controller", style = MaterialTheme.typography.headlineMedium)
-            Spacer(modifier = Modifier.height(8.dp))
+
             Text(
-                if (state.isLoginMode) "Accede a tu cuenta y registra tus pesajes" else "Crea tu cuenta y guarda tu evolución en la nube",
-                style = MaterialTheme.typography.bodyLarge
+                text = stringResource(R.string.app_name),
+                style = MaterialTheme.typography.headlineMedium,
             )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = stringResource(
+                    if (state.isLoginMode) {
+                        R.string.auth_login_subtitle
+                    } else {
+                        R.string.auth_register_subtitle
+                    },
+                ),
+                style = MaterialTheme.typography.bodyLarge,
+            )
+
             Spacer(modifier = Modifier.height(20.dp))
+
             AuthForm(
                 padding = PaddingValues(0.dp),
                 state = state,
@@ -84,10 +117,14 @@ fun AuthScreen(
                 onSexChange = onSexChange,
                 onToggleMode = onToggleMode,
                 onLogin = onLogin,
-                onRegister = onRegister
+                onRegister = onRegister,
             )
         }
-        SnackbarHost(hostState = snackbarHostState, modifier = Modifier.align(Alignment.BottomCenter))
+
+        SnackbarHost(
+            hostState = snackbarHostState,
+            modifier = Modifier.align(Alignment.BottomCenter),
+        )
     }
 }
 
@@ -104,36 +141,92 @@ private fun AuthForm(
     onSexChange: (String) -> Unit,
     onToggleMode: () -> Unit,
     onLogin: () -> Unit,
-    onRegister: () -> Unit
+    onRegister: () -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
-    val sexOptions = listOf("Hombre", "Mujer", "Otro")
-    Column(verticalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.padding(padding)) {
+    val sexOptions = listOf(
+        stringResource(R.string.sex_male),
+        stringResource(R.string.sex_female),
+        stringResource(R.string.sex_other),
+    )
+
+    Column(
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+        modifier = Modifier.padding(padding),
+    ) {
         if (!state.isLoginMode) {
-            OutlinedTextField(value = state.name, onValueChange = onNameChange, modifier = Modifier.fillMaxWidth(), label = { Text("Nombre") }, singleLine = true)
+            OutlinedTextField(
+                value = state.name,
+                onValueChange = onNameChange,
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text(stringResource(R.string.auth_name)) },
+                singleLine = true,
+            )
         }
-        OutlinedTextField(value = state.email, onValueChange = onEmailChange, modifier = Modifier.fillMaxWidth(), label = { Text("Email") }, singleLine = true)
-        OutlinedTextField(value = state.password, onValueChange = onPasswordChange, modifier = Modifier.fillMaxWidth(), label = { Text("Contraseña") }, visualTransformation = PasswordVisualTransformation(), singleLine = true)
+
+        OutlinedTextField(
+            value = state.email,
+            onValueChange = onEmailChange,
+            modifier = Modifier.fillMaxWidth(),
+            label = { Text(stringResource(R.string.auth_email)) },
+            singleLine = true,
+        )
+
+        OutlinedTextField(
+            value = state.password,
+            onValueChange = onPasswordChange,
+            modifier = Modifier.fillMaxWidth(),
+            label = { Text(stringResource(R.string.auth_password)) },
+            visualTransformation = PasswordVisualTransformation(),
+            singleLine = true,
+        )
 
         if (!state.isLoginMode) {
-            OutlinedTextField(value = state.heightCm, onValueChange = onHeightChange, modifier = Modifier.fillMaxWidth(), label = { Text("Estatura (cm)") }, singleLine = true)
-            OutlinedTextField(value = state.idealWeightKg, onValueChange = onIdealWeightChange, modifier = Modifier.fillMaxWidth(), label = { Text("Peso ideal (kg)") }, singleLine = true)
+            OutlinedTextField(
+                value = state.heightCm,
+                onValueChange = onHeightChange,
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text(stringResource(R.string.auth_height_cm)) },
+                singleLine = true,
+            )
 
-            ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = { expanded = !expanded }) {
+            OutlinedTextField(
+                value = state.idealWeightKg,
+                onValueChange = onIdealWeightChange,
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text(stringResource(R.string.auth_ideal_weight_kg)) },
+                singleLine = true,
+            )
+
+            ExposedDropdownMenuBox(
+                expanded = expanded,
+                onExpandedChange = { expanded = !expanded },
+            ) {
                 OutlinedTextField(
                     value = state.sex,
                     onValueChange = {},
                     readOnly = true,
-                    modifier = Modifier.menuAnchor().fillMaxWidth(),
-                    label = { Text("Sexo") },
-                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) }
+                    modifier = Modifier
+                        .menuAnchor()
+                        .fillMaxWidth(),
+                    label = { Text(stringResource(R.string.auth_sex)) },
+                    trailingIcon = {
+                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                    },
                 )
-                ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+
+                ExposedDropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false },
+                ) {
                     sexOptions.forEach { option ->
-                        DropdownMenuItem(text = { Text(option) }, onClick = {
-                            onSexChange(option)
-                            expanded = false
-                        })
+                        DropdownMenuItem(
+                            text = { Text(option) },
+                            onClick = {
+                                onSexChange(option)
+                                expanded = false
+                            },
+                        )
                     }
                 }
             }
@@ -142,17 +235,34 @@ private fun AuthForm(
         Button(
             onClick = { if (state.isLoginMode) onLogin() else onRegister() },
             modifier = Modifier.fillMaxWidth(),
-            enabled = !state.isLoading
+            enabled = !state.isLoading,
         ) {
             if (state.isLoading) {
-                CircularProgressIndicator(modifier = Modifier.size(18.dp), strokeWidth = 2.dp)
+                CircularProgressIndicator(
+                    modifier = Modifier.size(18.dp),
+                    strokeWidth = 2.dp,
+                )
                 Spacer(modifier = Modifier.width(8.dp))
             }
-            Text(if (state.isLoginMode) "Entrar" else "Registrarme")
+
+            Text(
+                stringResource(
+                    if (state.isLoginMode) R.string.auth_login_button
+                    else R.string.auth_register_button,
+                ),
+            )
         }
 
-        TextButton(onClick = onToggleMode, modifier = Modifier.align(Alignment.CenterHorizontally)) {
-            Text(if (state.isLoginMode) "No tengo cuenta. Quiero registrarme" else "Ya tengo cuenta. Quiero iniciar sesión")
+        TextButton(
+            onClick = onToggleMode,
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+        ) {
+            Text(
+                stringResource(
+                    if (state.isLoginMode) R.string.auth_switch_to_register
+                    else R.string.auth_switch_to_login,
+                ),
+            )
         }
     }
 }

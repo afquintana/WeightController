@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Weight Controller</string>
+    <string name="auth_login_subtitle">Masuk ke akun Anda dan catat timbang berat Anda</string>
+    <string name="auth_register_subtitle">Buat akun Anda dan simpan progres Anda di cloud</string>
+    <string name="auth_name">Nama</string>
+    <string name="auth_email">Email</string>
+    <string name="auth_password">Kata sandi</string>
+    <string name="auth_height_cm">Tinggi (cm)</string>
+    <string name="auth_ideal_weight_kg">Berat ideal (kg)</string>
+    <string name="auth_sex">Jenis kelamin</string>
+    <string name="auth_login_button">Masuk</string>
+    <string name="auth_register_button">Daftar</string>
+    <string name="auth_switch_to_register">Saya belum punya akun. Saya ingin mendaftar</string>
+    <string name="auth_switch_to_login">Saya sudah punya akun. Saya ingin masuk</string>
+    <string name="sex_male">Pria</string>
+    <string name="sex_female">Wanita</string>
+    <string name="sex_other">Lainnya</string>
+    <string name="home_logout_content_description">Keluar</string>
+    <string name="home_greeting">Halo, %1$s</string>
+    <string name="home_subtitle">Pantau perkembangan Anda dengan cara sederhana</string>
+    <string name="home_summary_title">Ringkasan</string>
+    <string name="home_height_value">Tinggi: %1$s cm</string>
+    <string name="home_ideal_weight_value">Berat ideal: %1$s kg</string>
+    <string name="home_last_bmi_value">BMI terbaru: %1$s</string>
+    <string name="home_new_weight_title">Catatan timbang baru</string>
+    <string name="home_current_weight_kg">Berat saat ini (kg)</string>
+    <string name="home_add_button">Tambah</string>
+    <string name="home_history_title">Riwayat berat</string>
+    <string name="home_empty_title">Anda belum mencatat timbang berat apa pun</string>
+    <string name="home_empty_subtitle">Tambahkan berat pertama Anda untuk mulai menghitung BMI.</string>
+    <string name="home_weight_value_kg">%1$s kg</string>
+    <string name="home_bmi_chip">BMI %1$s</string>
+    <string name="home_delete_content_description">Hapus</string>
+    <string name="error_email_password_required">Email dan kata sandi wajib diisi.</string>
+    <string name="error_login_failed">Tidak dapat masuk.</string>
+    <string name="error_complete_all_fields">Lengkapi semua kolom.</string>
+    <string name="error_enter_valid_profile_values">Masukkan nilai tinggi dan berat ideal yang valid.</string>
+    <string name="error_register_failed">Pendaftaran tidak dapat diselesaikan.</string>
+    <string name="error_profile_reload">Profil Anda tidak dapat dimuat. Keluar lalu masuk lagi.</string>
+    <string name="error_profile_load_failed">Profil Anda tidak dapat dimuat.</string>
+    <string name="error_profile_loading_retry">Profil Anda masih dimuat. Coba lagi sebentar lagi.</string>
+    <string name="error_invalid_weight">Masukkan berat yang valid.</string>
+    <string name="error_invalid_height_profile">Tinggi yang valid untuk profil Anda tidak dapat dimuat. Keluar lalu masuk lagi.</string>
+    <string name="error_save_weight_failed">Catatan timbang tidak dapat disimpan.</string>
+    <string name="error_delete_weight_failed">Catatan timbang tidak dapat dihapus.</string>
+</resources>

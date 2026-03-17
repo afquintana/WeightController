@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Weight Controller</string>
+    <string name="auth_login_subtitle">アカウントにアクセスして体重記録を保存します</string>
+    <string name="auth_register_subtitle">アカウントを作成して進捗をクラウドに保存します</string>
+    <string name="auth_name">名前</string>
+    <string name="auth_email">メール</string>
+    <string name="auth_password">パスワード</string>
+    <string name="auth_height_cm">身長 (cm)</string>
+    <string name="auth_ideal_weight_kg">理想体重 (kg)</string>
+    <string name="auth_sex">性別</string>
+    <string name="auth_login_button">ログイン</string>
+    <string name="auth_register_button">登録する</string>
+    <string name="auth_switch_to_register">アカウントがありません。登録します</string>
+    <string name="auth_switch_to_login">すでにアカウントがあります。ログインします</string>
+    <string name="sex_male">男性</string>
+    <string name="sex_female">女性</string>
+    <string name="sex_other">その他</string>
+    <string name="home_logout_content_description">ログアウト</string>
+    <string name="home_greeting">こんにちは、%1$s</string>
+    <string name="home_subtitle">シンプルに進捗を管理しましょう</string>
+    <string name="home_summary_title">概要</string>
+    <string name="home_height_value">身長: %1$s cm</string>
+    <string name="home_ideal_weight_value">理想体重: %1$s kg</string>
+    <string name="home_last_bmi_value">最新のBMI: %1$s</string>
+    <string name="home_new_weight_title">新しい体重記録</string>
+    <string name="home_current_weight_kg">現在の体重 (kg)</string>
+    <string name="home_add_button">追加</string>
+    <string name="home_history_title">体重履歴</string>
+    <string name="home_empty_title">まだ体重記録がありません</string>
+    <string name="home_empty_subtitle">最初の体重を追加してBMIの計算を始めましょう。</string>
+    <string name="home_weight_value_kg">%1$s kg</string>
+    <string name="home_bmi_chip">BMI %1$s</string>
+    <string name="home_delete_content_description">削除</string>
+    <string name="error_email_password_required">メールとパスワードは必須です。</string>
+    <string name="error_login_failed">ログインできませんでした。</string>
+    <string name="error_complete_all_fields">すべての項目を入力してください。</string>
+    <string name="error_enter_valid_profile_values">身長と理想体重には有効な値を入力してください。</string>
+    <string name="error_register_failed">登録を完了できませんでした。</string>
+    <string name="error_profile_reload">プロフィールを読み込めませんでした。ログアウトして再度ログインしてください。</string>
+    <string name="error_profile_load_failed">プロフィールを読み込めませんでした。</string>
+    <string name="error_profile_loading_retry">プロフィールを読み込み中です。しばらくしてからもう一度お試しください。</string>
+    <string name="error_invalid_weight">有効な体重を入力してください。</string>
+    <string name="error_invalid_height_profile">プロフィールの有効な身長を読み込めませんでした。ログアウトして再度ログインしてください。</string>
+    <string name="error_save_weight_failed">体重記録を保存できませんでした。</string>
+    <string name="error_delete_weight_failed">体重記録を削除できませんでした。</string>
+</resources>

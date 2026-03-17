@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Weight Controller</string>
+    <string name="auth_login_subtitle">Greife auf dein Konto zu und erfasse deine Wiegungen</string>
+    <string name="auth_register_subtitle">Erstelle dein Konto und speichere deinen Fortschritt in der Cloud</string>
+    <string name="auth_name">Name</string>
+    <string name="auth_email">E-Mail</string>
+    <string name="auth_password">Passwort</string>
+    <string name="auth_height_cm">Größe (cm)</string>
+    <string name="auth_ideal_weight_kg">Idealgewicht (kg)</string>
+    <string name="auth_sex">Geschlecht</string>
+    <string name="auth_login_button">Anmelden</string>
+    <string name="auth_register_button">Registrieren</string>
+    <string name="auth_switch_to_register">Ich habe kein Konto. Ich möchte mich registrieren</string>
+    <string name="auth_switch_to_login">Ich habe bereits ein Konto. Ich möchte mich anmelden</string>
+    <string name="sex_male">Männlich</string>
+    <string name="sex_female">Weiblich</string>
+    <string name="sex_other">Andere</string>
+    <string name="home_logout_content_description">Abmelden</string>
+    <string name="home_greeting">Hallo, %1$s</string>
+    <string name="home_subtitle">Verfolge deinen Fortschritt auf einfache Weise</string>
+    <string name="home_summary_title">Übersicht</string>
+    <string name="home_height_value">Größe: %1$s cm</string>
+    <string name="home_ideal_weight_value">Idealgewicht: %1$s kg</string>
+    <string name="home_last_bmi_value">Letzter BMI: %1$s</string>
+    <string name="home_new_weight_title">Neue Wiegung</string>
+    <string name="home_current_weight_kg">Aktuelles Gewicht (kg)</string>
+    <string name="home_add_button">Hinzufügen</string>
+    <string name="home_history_title">Gewichtsverlauf</string>
+    <string name="home_empty_title">Du hast noch keine Wiegungen erfasst</string>
+    <string name="home_empty_subtitle">Füge dein erstes Gewicht hinzu, um deinen BMI zu berechnen.</string>
+    <string name="home_weight_value_kg">%1$s kg</string>
+    <string name="home_bmi_chip">BMI %1$s</string>
+    <string name="home_delete_content_description">Löschen</string>
+    <string name="error_email_password_required">E-Mail und Passwort sind erforderlich.</string>
+    <string name="error_login_failed">Anmeldung fehlgeschlagen.</string>
+    <string name="error_complete_all_fields">Fülle alle Felder aus.</string>
+    <string name="error_enter_valid_profile_values">Gib gültige Werte für Größe und Idealgewicht ein.</string>
+    <string name="error_register_failed">Registrierung konnte nicht abgeschlossen werden.</string>
+    <string name="error_profile_reload">Dein Profil konnte nicht geladen werden. Melde dich ab und wieder an.</string>
+    <string name="error_profile_load_failed">Dein Profil konnte nicht geladen werden.</string>
+    <string name="error_profile_loading_retry">Dein Profil wird noch geladen. Bitte versuche es gleich noch einmal.</string>
+    <string name="error_invalid_weight">Gib ein gültiges Gewicht ein.</string>
+    <string name="error_invalid_height_profile">Für dein Profil konnte keine gültige Größe geladen werden. Melde dich ab und wieder an.</string>
+    <string name="error_save_weight_failed">Die Wiegung konnte nicht gespeichert werden.</string>
+    <string name="error_delete_weight_failed">Die Wiegung konnte nicht gelöscht werden.</string>
+</resources>

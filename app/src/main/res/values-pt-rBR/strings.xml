@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Weight Controller</string>
+    <string name="auth_login_subtitle">Acesse sua conta e registre suas pesagens</string>
+    <string name="auth_register_subtitle">Crie sua conta e salve seu progresso na nuvem</string>
+    <string name="auth_name">Nome</string>
+    <string name="auth_email">Email</string>
+    <string name="auth_password">Senha</string>
+    <string name="auth_height_cm">Altura (cm)</string>
+    <string name="auth_ideal_weight_kg">Peso ideal (kg)</string>
+    <string name="auth_sex">Sexo</string>
+    <string name="auth_login_button">Entrar</string>
+    <string name="auth_register_button">Cadastrar-me</string>
+    <string name="auth_switch_to_register">Não tenho conta. Quero me cadastrar</string>
+    <string name="auth_switch_to_login">Já tenho conta. Quero entrar</string>
+    <string name="sex_male">Homem</string>
+    <string name="sex_female">Mulher</string>
+    <string name="sex_other">Outro</string>
+    <string name="home_logout_content_description">Sair</string>
+    <string name="home_greeting">Olá, %1$s</string>
+    <string name="home_subtitle">Acompanhe seu progresso de forma simples</string>
+    <string name="home_summary_title">Resumo</string>
+    <string name="home_height_value">Altura: %1$s cm</string>
+    <string name="home_ideal_weight_value">Peso ideal: %1$s kg</string>
+    <string name="home_last_bmi_value">Último IMC: %1$s</string>
+    <string name="home_new_weight_title">Nova pesagem</string>
+    <string name="home_current_weight_kg">Peso atual (kg)</string>
+    <string name="home_add_button">Adicionar</string>
+    <string name="home_history_title">Histórico de pesagens</string>
+    <string name="home_empty_title">Você ainda não registrou pesagens</string>
+    <string name="home_empty_subtitle">Adicione seu primeiro peso para começar a calcular seu IMC.</string>
+    <string name="home_weight_value_kg">%1$s kg</string>
+    <string name="home_bmi_chip">IMC %1$s</string>
+    <string name="home_delete_content_description">Excluir</string>
+    <string name="error_email_password_required">Email e senha são obrigatórios.</string>
+    <string name="error_login_failed">Não foi possível entrar.</string>
+    <string name="error_complete_all_fields">Preencha todos os campos.</string>
+    <string name="error_enter_valid_profile_values">Digite valores válidos para altura e peso ideal.</string>
+    <string name="error_register_failed">Não foi possível concluir o cadastro.</string>
+    <string name="error_profile_reload">Não foi possível carregar seu perfil. Saia e entre novamente.</string>
+    <string name="error_profile_load_failed">Não foi possível carregar seu perfil.</string>
+    <string name="error_profile_loading_retry">Seu perfil ainda está sendo carregado. Tente novamente em instantes.</string>
+    <string name="error_invalid_weight">Digite um peso válido.</string>
+    <string name="error_invalid_height_profile">Não foi possível carregar uma altura válida para seu perfil. Saia e entre novamente.</string>
+    <string name="error_save_weight_failed">Não foi possível salvar a pesagem.</string>
+    <string name="error_delete_weight_failed">Não foi possível excluir a pesagem.</string>
+</resources>

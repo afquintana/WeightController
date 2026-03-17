@@ -1,12 +1,15 @@
 package com.afquintana.weightcontroller.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.afquintana.weightcontroller.R
 import com.afquintana.weightcontroller.data.auth.AuthRepository
 import com.afquintana.weightcontroller.data.crash.CrashReporter
 import com.afquintana.weightcontroller.data.model.WeightEntry
 import com.afquintana.weightcontroller.data.weight.WeightRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,14 +25,15 @@ data class HomeUiState(
     val weights: List<WeightEntry> = emptyList(),
     val isSaving: Boolean = false,
     val isProfileLoaded: Boolean = false,
-    val errorMessage: String? = null
+    val errorMessage: String? = null,
 )
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val weightRepository: WeightRepository,
-    private val crashReporter: CrashReporter
+    private val crashReporter: CrashReporter,
+    @ApplicationContext private val context: Context,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(HomeUiState())
@@ -50,12 +54,12 @@ class HomeViewModel @Inject constructor(
                             heightCm = profile.heightCm,
                             idealWeightKg = profile.idealWeightKg,
                             isProfileLoaded = true,
-                            errorMessage = null
+                            errorMessage = null,
                         )
                     } else {
                         _uiState.value = _uiState.value.copy(
                             isProfileLoaded = true,
-                            errorMessage = "No se pudo cargar tu perfil. Cierra sesión y vuelve a entrar."
+                            errorMessage = context.getString(R.string.error_profile_reload),
                         )
                     }
                 }
@@ -63,7 +67,8 @@ class HomeViewModel @Inject constructor(
                     crashReporter.record(error)
                     _uiState.value = _uiState.value.copy(
                         isProfileLoaded = true,
-                        errorMessage = error.message ?: "No se pudo cargar tu perfil."
+                        errorMessage = error.message
+                            ?: context.getString(R.string.error_profile_load_failed),
                     )
                 }
         }
@@ -74,7 +79,7 @@ class HomeViewModel @Inject constructor(
             weightRepository.observeWeights().collect { items ->
                 _uiState.value = _uiState.value.copy(
                     weights = items,
-                    lastBmi = items.lastOrNull()?.bmi
+                    lastBmi = items.lastOrNull()?.bmi,
                 )
             }
         }
@@ -83,29 +88,28 @@ class HomeViewModel @Inject constructor(
     fun onWeightInputChange(value: String) {
         _uiState.value = _uiState.value.copy(
             newWeightInput = value,
-            errorMessage = null
+            errorMessage = null,
         )
     }
 
     fun addWeight() {
         val state = _uiState.value
-
         if (!state.isProfileLoaded) {
             _uiState.value = state.copy(
-                errorMessage = "Tu perfil todavía se está cargando. Inténtalo de nuevo en un momento."
+                errorMessage = context.getString(R.string.error_profile_loading_retry),
             )
             return
         }
 
         val weight = state.newWeightInput.toDoubleOrNull()
         if (weight == null) {
-            _uiState.value = state.copy(errorMessage = "Introduce un peso válido.")
+            _uiState.value = state.copy(errorMessage = context.getString(R.string.error_invalid_weight))
             return
         }
 
         if (state.heightCm <= 0.0) {
             _uiState.value = state.copy(
-                errorMessage = "No se ha podido cargar una estatura válida para tu perfil. Cierra sesión y vuelve a entrar."
+                errorMessage = context.getString(R.string.error_invalid_height_profile),
             )
             return
         }
@@ -116,14 +120,15 @@ class HomeViewModel @Inject constructor(
                 .onSuccess {
                     _uiState.value = _uiState.value.copy(
                         isSaving = false,
-                        newWeightInput = ""
+                        newWeightInput = "",
                     )
                 }
                 .onFailure { error ->
                     crashReporter.record(error)
                     _uiState.value = _uiState.value.copy(
                         isSaving = false,
-                        errorMessage = error.message ?: "No se pudo guardar el pesaje."
+                        errorMessage = error.message
+                            ?: context.getString(R.string.error_save_weight_failed),
                     )
                 }
         }
@@ -135,7 +140,8 @@ class HomeViewModel @Inject constructor(
                 .onFailure { error ->
                     crashReporter.record(error)
                     _uiState.value = _uiState.value.copy(
-                        errorMessage = error.message ?: "No se pudo eliminar el pesaje."
+                        errorMessage = error.message
+                            ?: context.getString(R.string.error_delete_weight_failed),
                     )
                 }
         }

@@ -39,6 +39,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.afquintana.weightcontroller.R
@@ -53,7 +54,7 @@ fun HomeScreen(
     onWeightInputChange: (String) -> Unit,
     onAddWeight: () -> Unit,
     onDeleteWeight: (String) -> Unit,
-    onLogout: () -> Unit
+    onLogout: () -> Unit,
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -66,27 +67,31 @@ fun HomeScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .imePadding()
-            .navigationBarsPadding()
+            .navigationBarsPadding(),
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(20.dp)
+                .padding(20.dp),
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 FilledTonalIconButton(onClick = onLogout) {
-                    Icon(Icons.Default.ExitToApp, contentDescription = "Cerrar sesión")
+                    Icon(
+                        Icons.Default.ExitToApp,
+                        contentDescription = stringResource(R.string.home_logout_content_description),
+                    )
                 }
 
                 Spacer(modifier = Modifier.width(12.dp))
 
                 Column {
                     Text(
-                        text = "Hola, ${state.userName}",
+                        text = stringResource(R.string.home_greeting, state.userName),
                         style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
                     )
-                    Text("Controla tu evolución de forma simple")
+
+                    Text(stringResource(R.string.home_subtitle))
                 }
             }
 
@@ -94,19 +99,26 @@ fun HomeScreen(
 
             ElevatedCard(
                 colors = CardDefaults.elevatedCardColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer
-                )
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                ),
             ) {
                 Column(modifier = Modifier.padding(18.dp)) {
                     Text(
-                        text = "Resumen",
+                        text = stringResource(R.string.home_summary_title),
                         style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.SemiBold
+                        fontWeight = FontWeight.SemiBold,
                     )
+
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text("Estatura: ${pretty(state.heightCm)} cm")
-                    Text("Peso ideal: ${pretty(state.idealWeightKg)} kg")
-                    Text("Último IMC: ${state.lastBmi?.let { pretty(it) } ?: "--"}")
+
+                    Text(stringResource(R.string.home_height_value, pretty(state.heightCm)))
+                    Text(stringResource(R.string.home_ideal_weight_value, pretty(state.idealWeightKg)))
+                    Text(
+                        stringResource(
+                            R.string.home_last_bmi_value,
+                            state.lastBmi?.let { pretty(it) } ?: "--",
+                        ),
+                    )
                 }
             }
 
@@ -115,9 +127,9 @@ fun HomeScreen(
             ElevatedCard {
                 Column(modifier = Modifier.padding(18.dp)) {
                     Text(
-                        text = "Nuevo pesaje",
+                        text = stringResource(R.string.home_new_weight_title),
                         style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.SemiBold
+                        fontWeight = FontWeight.SemiBold,
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))
@@ -126,25 +138,25 @@ fun HomeScreen(
                         OutlinedTextField(
                             value = state.newWeightInput,
                             onValueChange = onWeightInputChange,
-                            label = { Text("Peso actual (kg)") },
+                            label = { Text(stringResource(R.string.home_current_weight_kg)) },
                             modifier = Modifier.weight(1f),
                             singleLine = true,
-                            enabled = !state.isSaving && state.isProfileLoaded
+                            enabled = !state.isSaving && state.isProfileLoaded,
                         )
 
                         Spacer(modifier = Modifier.width(12.dp))
 
                         Button(
                             onClick = onAddWeight,
-                            enabled = !state.isSaving && state.isProfileLoaded && state.heightCm > 0.0
+                            enabled = !state.isSaving && state.isProfileLoaded && state.heightCm > 0.0,
                         ) {
                             if (state.isSaving) {
                                 CircularProgressIndicator(
                                     modifier = Modifier.size(18.dp),
-                                    strokeWidth = 2.dp
+                                    strokeWidth = 2.dp,
                                 )
                             } else {
-                                Text("Añadir")
+                                Text(stringResource(R.string.home_add_button))
                             }
                         }
                     }
@@ -154,9 +166,9 @@ fun HomeScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = "Histórico de pesajes",
+                text = stringResource(R.string.home_history_title),
                 style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.SemiBold,
             )
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -167,23 +179,27 @@ fun HomeScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(24.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
+                        horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         Image(
                             painter = painterResource(id = R.drawable.empty_weights),
                             contentDescription = null,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(180.dp)
+                                .height(180.dp),
                         )
+
                         Spacer(modifier = Modifier.height(10.dp))
+
                         Text(
-                            text = "Todavía no has registrado pesajes",
+                            text = stringResource(R.string.home_empty_title),
                             style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.SemiBold
+                            fontWeight = FontWeight.SemiBold,
                         )
+
                         Spacer(modifier = Modifier.height(6.dp))
-                        Text("Añade tu primer peso para empezar a calcular tu IMC.")
+
+                        Text(stringResource(R.string.home_empty_subtitle))
                     }
                 }
             } else {
@@ -194,28 +210,42 @@ fun HomeScreen(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(18.dp),
-                                verticalAlignment = Alignment.CenterVertically
+                                verticalAlignment = Alignment.CenterVertically,
                             ) {
                                 Column(modifier = Modifier.weight(1f)) {
                                     Text(
-                                        text = "${pretty(item.weightKg)} kg",
+                                        text = stringResource(R.string.home_weight_value_kg, pretty(item.weightKg)),
                                         style = MaterialTheme.typography.titleMedium,
-                                        fontWeight = FontWeight.Bold
+                                        fontWeight = FontWeight.Bold,
                                     )
+
                                     Spacer(modifier = Modifier.height(6.dp))
+
                                     AssistChip(
                                         onClick = {},
-                                        label = { Text("IMC ${pretty(item.bmi)}") }
+                                        label = {
+                                            Text(
+                                                stringResource(
+                                                    R.string.home_bmi_chip,
+                                                    pretty(item.bmi),
+                                                ),
+                                            )
+                                        },
                                     )
+
                                     Spacer(modifier = Modifier.height(6.dp))
+
                                     Text(
                                         text = formatDate(item.createdAt),
-                                        style = MaterialTheme.typography.bodySmall
+                                        style = MaterialTheme.typography.bodySmall,
                                     )
                                 }
 
                                 IconButton(onClick = { onDeleteWeight(item.id) }) {
-                                    Icon(Icons.Default.Delete, contentDescription = "Eliminar")
+                                    Icon(
+                                        Icons.Default.Delete,
+                                        contentDescription = stringResource(R.string.home_delete_content_description),
+                                    )
                                 }
                             }
                         }
@@ -226,7 +256,7 @@ fun HomeScreen(
 
         SnackbarHost(
             hostState = snackbarHostState,
-            modifier = Modifier.align(Alignment.BottomCenter)
+            modifier = Modifier.align(Alignment.BottomCenter),
         )
     }
 }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Weight Controller</string>
+    <string name="auth_login_subtitle">अपने खाते में जाएँ और अपना वजन दर्ज करें</string>
+    <string name="auth_register_subtitle">अपना खाता बनाएँ और अपनी प्रगति क्लाउड में सहेजें</string>
+    <string name="auth_name">नाम</string>
+    <string name="auth_email">ईमेल</string>
+    <string name="auth_password">पासवर्ड</string>
+    <string name="auth_height_cm">लंबाई (सेमी)</string>
+    <string name="auth_ideal_weight_kg">आदर्श वजन (किग्रा)</string>
+    <string name="auth_sex">लिंग</string>
+    <string name="auth_login_button">साइन इन</string>
+    <string name="auth_register_button">साइन अप</string>
+    <string name="auth_switch_to_register">मेरे पास खाता नहीं है। मैं साइन अप करना चाहता/चाहती हूँ</string>
+    <string name="auth_switch_to_login">मेरे पास पहले से खाता है। मैं साइन इन करना चाहता/चाहती हूँ</string>
+    <string name="sex_male">पुरुष</string>
+    <string name="sex_female">महिला</string>
+    <string name="sex_other">अन्य</string>
+    <string name="home_logout_content_description">साइन आउट</string>
+    <string name="home_greeting">नमस्ते, %1$s</string>
+    <string name="home_subtitle">अपनी प्रगति को सरल तरीके से ट्रैक करें</string>
+    <string name="home_summary_title">सारांश</string>
+    <string name="home_height_value">लंबाई: %1$s सेमी</string>
+    <string name="home_ideal_weight_value">आदर्श वजन: %1$s किग्रा</string>
+    <string name="home_last_bmi_value">नवीनतम BMI: %1$s</string>
+    <string name="home_new_weight_title">नई वज़न प्रविष्टि</string>
+    <string name="home_current_weight_kg">वर्तमान वजन (किग्रा)</string>
+    <string name="home_add_button">जोड़ें</string>
+    <string name="home_history_title">वज़न इतिहास</string>
+    <string name="home_empty_title">आपने अभी तक कोई वज़न प्रविष्टि दर्ज नहीं की है</string>
+    <string name="home_empty_subtitle">अपना BMI निकालना शुरू करने के लिए अपना पहला वजन जोड़ें।</string>
+    <string name="home_weight_value_kg">%1$s किग्रा</string>
+    <string name="home_bmi_chip">BMI %1$s</string>
+    <string name="home_delete_content_description">हटाएँ</string>
+    <string name="error_email_password_required">ईमेल और पासवर्ड आवश्यक हैं।</string>
+    <string name="error_login_failed">साइन इन नहीं हो सका।</string>
+    <string name="error_complete_all_fields">सभी फ़ील्ड भरें।</string>
+    <string name="error_enter_valid_profile_values">लंबाई और आदर्श वजन के लिए मान्य मान दर्ज करें।</string>
+    <string name="error_register_failed">साइन अप पूरा नहीं हो सका।</string>
+    <string name="error_profile_reload">आपकी प्रोफ़ाइल लोड नहीं हो सकी। साइन आउट करें और फिर से साइन इन करें।</string>
+    <string name="error_profile_load_failed">आपकी प्रोफ़ाइल लोड नहीं हो सकी।</string>
+    <string name="error_profile_loading_retry">आपकी प्रोफ़ाइल अभी भी लोड हो रही है। कृपया थोड़ी देर बाद फिर प्रयास करें।</string>
+    <string name="error_invalid_weight">मान्य वजन दर्ज करें।</string>
+    <string name="error_invalid_height_profile">आपकी प्रोफ़ाइल के लिए मान्य लंबाई लोड नहीं हो सकी। साइन आउट करें और फिर से साइन इन करें।</string>
+    <string name="error_save_weight_failed">वज़न प्रविष्टि सहेजी नहीं जा सकी।</string>
+    <string name="error_delete_weight_failed">वज़न प्रविष्टि हटाई नहीं जा सकी।</string>
+</resources>
