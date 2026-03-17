@@ -82,10 +82,10 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.google.material)
 
-    implementation(libs.firebase.auth.ktx)
-    implementation(libs.firebase.firestore.ktx)
-    implementation(libs.firebase.analytics.ktx)
-    implementation(libs.firebase.crashlytics.ktx)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
 
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
