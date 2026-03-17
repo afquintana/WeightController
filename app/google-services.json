@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "38339685383",
+    "project_id": "weightcontrollerquin",
+    "storage_bucket": "weightcontrollerquin.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:38339685383:android:320dd0b2056d3b9de78ea2",
+        "android_client_info": {
+          "package_name": "com.afquintana.weightcontroller"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5R997fgUXzWM0hZgsJq1Qt4lotHN4r4w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
