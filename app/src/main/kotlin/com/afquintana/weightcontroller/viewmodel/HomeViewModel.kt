@@ -1,14 +1,17 @@
 package com.afquintana.weightcontroller.viewmodel
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.afquintana.weightcontroller.data.auth.AuthRepository
 import com.afquintana.weightcontroller.data.crash.CrashReporter
 import com.afquintana.weightcontroller.data.model.WeightEntry
 import com.afquintana.weightcontroller.data.weight.WeightRepository
-import kotlinx.coroutines.flow.*
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 data class HomeUiState(
     val userName: String = "",
@@ -21,7 +24,8 @@ data class HomeUiState(
     val errorMessage: String? = null
 )
 
-class HomeViewModel(
+@HiltViewModel
+class HomeViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val weightRepository: WeightRepository,
     private val crashReporter: CrashReporter
@@ -39,10 +43,24 @@ class HomeViewModel(
             runCatching { authRepository.getCurrentProfile() }
                 .onSuccess { profile ->
                     if (profile != null) {
-                        _uiState.value = _uiState.value.copy(userName = profile.name, heightCm = profile.heightCm, idealWeightKg = profile.idealWeightKg)
+                        _uiState.value = _uiState.value.copy(
+                            userName = profile.name,
+                            heightCm = profile.heightCm,
+                            idealWeightKg = profile.idealWeightKg,
+                            errorMessage = null
+                        )
+                    } else {
+                        _uiState.value = _uiState.value.copy(
+                            errorMessage = "No se pudo cargar tu perfil. Cierra sesión y vuelve a entrar."
+                        )
                     }
                 }
-                .onFailure { crashReporter.record(it) }
+                .onFailure {
+                    crashReporter.record(it)
+                    _uiState.value = _uiState.value.copy(
+                        errorMessage = it.message ?: "No se pudo cargar tu perfil."
+                    )
+                }
         }
     }
 
@@ -54,7 +72,9 @@ class HomeViewModel(
         }
     }
 
-    fun onWeightInputChange(value: String) { _uiState.value = _uiState.value.copy(newWeightInput = value, errorMessage = null) }
+    fun onWeightInputChange(value: String) {
+        _uiState.value = _uiState.value.copy(newWeightInput = value, errorMessage = null)
+    }
 
     fun addWeight() {
         val state = _uiState.value
@@ -64,7 +84,9 @@ class HomeViewModel(
             return
         }
         if (state.heightCm <= 0.0) {
-            _uiState.value = state.copy(errorMessage = "No hay estatura válida en el perfil.")
+            _uiState.value = state.copy(
+                errorMessage = "Tu perfil no tiene una estatura válida. Ve a Perfil, complétala y vuelve a intentarlo."
+            )
             return
         }
         viewModelScope.launch {
@@ -93,13 +115,4 @@ class HomeViewModel(
             runCatching { authRepository.logout() }.onFailure { crashReporter.record(it) }
         }
     }
-}
-
-class HomeViewModelFactory(
-    private val authRepository: AuthRepository,
-    private val weightRepository: WeightRepository,
-    private val crashReporter: CrashReporter
-) : ViewModelProvider.Factory {
-    @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel> create(modelClass: Class<T>): T = HomeViewModel(authRepository, weightRepository, crashReporter) as T
 }

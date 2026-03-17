@@ -11,8 +11,11 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import kotlin.math.pow
 import kotlin.math.round
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class WeightRepository(
+@Singleton
+class WeightRepository @Inject constructor(
     private val auth: FirebaseAuth,
     private val firestore: FirebaseFirestore,
     private val analyticsHelper: AnalyticsHelper,

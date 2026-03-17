@@ -1,13 +1,16 @@
 package com.afquintana.weightcontroller.viewmodel
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.afquintana.weightcontroller.data.auth.AuthRepository
 import com.afquintana.weightcontroller.data.crash.CrashReporter
 import com.afquintana.weightcontroller.data.model.RegisterInput
-import kotlinx.coroutines.flow.*
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 data class AuthUiState(
     val isLoginMode: Boolean = true,
@@ -22,7 +25,8 @@ data class AuthUiState(
     val errorMessage: String? = null
 )
 
-class AuthViewModel(
+@HiltViewModel
+class AuthViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val crashReporter: CrashReporter
 ) : ViewModel() {
@@ -90,12 +94,4 @@ class AuthViewModel(
             }
         }
     }
-}
-
-class AuthViewModelFactory(
-    private val authRepository: AuthRepository,
-    private val crashReporter: CrashReporter
-) : ViewModelProvider.Factory {
-    @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel> create(modelClass: Class<T>): T = AuthViewModel(authRepository, crashReporter) as T
 }

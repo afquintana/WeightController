@@ -3,22 +3,19 @@ package com.afquintana.weightcontroller.ui.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.afquintana.weightcontroller.app.AppGraph
 import com.afquintana.weightcontroller.ui.screen.auth.AuthScreen
 import com.afquintana.weightcontroller.ui.screen.home.HomeScreen
 import com.afquintana.weightcontroller.viewmodel.AuthViewModel
-import com.afquintana.weightcontroller.viewmodel.AuthViewModelFactory
 import com.afquintana.weightcontroller.viewmodel.HomeViewModel
-import com.afquintana.weightcontroller.viewmodel.HomeViewModelFactory
 
 @Composable
-fun WeightControllerNavHost(appGraph: AppGraph) {
+fun WeightControllerNavHost() {
     val navController = rememberNavController()
-    val authViewModel: AuthViewModel = viewModel(factory = AuthViewModelFactory(appGraph.authRepository, appGraph.crashReporter))
+    val authViewModel: AuthViewModel = hiltViewModel()
     val authState by authViewModel.uiState.collectAsState()
 
     NavHost(
@@ -52,7 +49,7 @@ fun WeightControllerNavHost(appGraph: AppGraph) {
             )
         }
         composable(NavRoutes.Home.route) {
-            val homeViewModel: HomeViewModel = viewModel(factory = HomeViewModelFactory(appGraph.authRepository, appGraph.weightRepository, appGraph.crashReporter))
+            val homeViewModel: HomeViewModel = hiltViewModel()
             val homeState by homeViewModel.uiState.collectAsState()
             HomeScreen(
                 state = homeState,

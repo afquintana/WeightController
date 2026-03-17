@@ -12,8 +12,11 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class AuthRepository(
+@Singleton
+class AuthRepository @Inject constructor(
     private val auth: FirebaseAuth,
     private val firestore: FirebaseFirestore,
     private val analyticsHelper: AnalyticsHelper,
@@ -67,12 +70,23 @@ class AuthRepository(
         val user = auth.currentUser ?: return null
         val snapshot = firestore.collection("users").document(user.uid).get().await()
         if (!snapshot.exists()) return null
+
+        val heightCm = snapshot.getDouble("heightCm")
+            ?: snapshot.getLong("heightCm")?.toDouble()
+            ?: snapshot.getString("heightCm")?.replace(',', '.')?.toDoubleOrNull()
+            ?: 0.0
+
+        val idealWeightKg = snapshot.getDouble("idealWeightKg")
+            ?: snapshot.getLong("idealWeightKg")?.toDouble()
+            ?: snapshot.getString("idealWeightKg")?.replace(',', '.')?.toDoubleOrNull()
+            ?: 0.0
+
         return UserProfile(
             uid = snapshot.getString("uid").orEmpty(),
             name = snapshot.getString("name").orEmpty(),
             email = snapshot.getString("email").orEmpty(),
-            heightCm = snapshot.getDouble("heightCm") ?: 0.0,
-            idealWeightKg = snapshot.getDouble("idealWeightKg") ?: 0.0,
+            heightCm = heightCm,
+            idealWeightKg = idealWeightKg,
             sex = snapshot.getString("sex").orEmpty(),
             createdAt = snapshot.getLong("createdAt") ?: 0L
         )
