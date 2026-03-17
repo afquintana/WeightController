@@ -21,6 +21,7 @@ data class HomeUiState(
     val lastBmi: Double? = null,
     val weights: List<WeightEntry> = emptyList(),
     val isSaving: Boolean = false,
+    val isProfileLoaded: Boolean = false,
     val errorMessage: String? = null
 )
 
@@ -30,6 +31,7 @@ class HomeViewModel @Inject constructor(
     private val weightRepository: WeightRepository,
     private val crashReporter: CrashReporter
 ) : ViewModel() {
+
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
@@ -47,18 +49,21 @@ class HomeViewModel @Inject constructor(
                             userName = profile.name,
                             heightCm = profile.heightCm,
                             idealWeightKg = profile.idealWeightKg,
+                            isProfileLoaded = true,
                             errorMessage = null
                         )
                     } else {
                         _uiState.value = _uiState.value.copy(
+                            isProfileLoaded = true,
                             errorMessage = "No se pudo cargar tu perfil. Cierra sesión y vuelve a entrar."
                         )
                     }
                 }
-                .onFailure {
-                    crashReporter.record(it)
+                .onFailure { error ->
+                    crashReporter.record(error)
                     _uiState.value = _uiState.value.copy(
-                        errorMessage = it.message ?: "No se pudo cargar tu perfil."
+                        isProfileLoaded = true,
+                        errorMessage = error.message ?: "No se pudo cargar tu perfil."
                     )
                 }
         }
@@ -67,35 +72,59 @@ class HomeViewModel @Inject constructor(
     private fun observeWeights() {
         viewModelScope.launch {
             weightRepository.observeWeights().collect { items ->
-                _uiState.value = _uiState.value.copy(weights = items, lastBmi = items.lastOrNull()?.bmi)
+                _uiState.value = _uiState.value.copy(
+                    weights = items,
+                    lastBmi = items.lastOrNull()?.bmi
+                )
             }
         }
     }
 
     fun onWeightInputChange(value: String) {
-        _uiState.value = _uiState.value.copy(newWeightInput = value, errorMessage = null)
+        _uiState.value = _uiState.value.copy(
+            newWeightInput = value,
+            errorMessage = null
+        )
     }
 
     fun addWeight() {
         val state = _uiState.value
+
+        if (!state.isProfileLoaded) {
+            _uiState.value = state.copy(
+                errorMessage = "Tu perfil todavía se está cargando. Inténtalo de nuevo en un momento."
+            )
+            return
+        }
+
         val weight = state.newWeightInput.toDoubleOrNull()
         if (weight == null) {
             _uiState.value = state.copy(errorMessage = "Introduce un peso válido.")
             return
         }
+
         if (state.heightCm <= 0.0) {
             _uiState.value = state.copy(
-                errorMessage = "Tu perfil no tiene una estatura válida. Ve a Perfil, complétala y vuelve a intentarlo."
+                errorMessage = "No se ha podido cargar una estatura válida para tu perfil. Cierra sesión y vuelve a entrar."
             )
             return
         }
+
         viewModelScope.launch {
             _uiState.value = state.copy(isSaving = true, errorMessage = null)
             runCatching { weightRepository.addWeight(weight, state.heightCm) }
-                .onSuccess { _uiState.value = _uiState.value.copy(isSaving = false, newWeightInput = "") }
+                .onSuccess {
+                    _uiState.value = _uiState.value.copy(
+                        isSaving = false,
+                        newWeightInput = ""
+                    )
+                }
                 .onFailure { error ->
                     crashReporter.record(error)
-                    _uiState.value = _uiState.value.copy(isSaving = false, errorMessage = error.message ?: "No se pudo guardar el pesaje.")
+                    _uiState.value = _uiState.value.copy(
+                        isSaving = false,
+                        errorMessage = error.message ?: "No se pudo guardar el pesaje."
+                    )
                 }
         }
     }
@@ -105,14 +134,17 @@ class HomeViewModel @Inject constructor(
             runCatching { weightRepository.deleteWeight(weightId) }
                 .onFailure { error ->
                     crashReporter.record(error)
-                    _uiState.value = _uiState.value.copy(errorMessage = error.message ?: "No se pudo eliminar el pesaje.")
+                    _uiState.value = _uiState.value.copy(
+                        errorMessage = error.message ?: "No se pudo eliminar el pesaje."
+                    )
                 }
         }
     }
 
     fun logout() {
         viewModelScope.launch {
-            runCatching { authRepository.logout() }.onFailure { crashReporter.record(it) }
+            runCatching { authRepository.logout() }
+                .onFailure { error -> crashReporter.record(error) }
         }
     }
 }
