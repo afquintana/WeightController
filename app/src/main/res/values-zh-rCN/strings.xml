@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name">Weight Controller</string>
     <string name="auth_login_subtitle">访问你的账户并记录体重</string>

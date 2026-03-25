@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name">Weight Controller</string>
-
     <string name="auth_login_subtitle">Accede a tu cuenta y registra tus pesajes</string>
     <string name="auth_register_subtitle">Crea tu cuenta y guarda tu evolución en la nube</string>
     <string name="auth_name">Nombre</string>
@@ -17,7 +16,6 @@
     <string name="sex_male">Hombre</string>
     <string name="sex_female">Mujer</string>
     <string name="sex_other">Otro</string>
-
     <string name="home_logout_content_description">Cerrar sesión</string>
     <string name="home_greeting">Hola, %1$s</string>
     <string name="home_subtitle">Controla tu evolución de forma simple</string>
@@ -34,7 +32,6 @@
     <string name="home_weight_value_kg">%1$s kg</string>
     <string name="home_bmi_chip">IMC %1$s</string>
     <string name="home_delete_content_description">Eliminar</string>
-
     <string name="error_email_password_required">El email y la contraseña son obligatorios.</string>
     <string name="error_login_failed">No se pudo iniciar sesión.</string>
     <string name="error_complete_all_fields">Completa todos los campos.</string>

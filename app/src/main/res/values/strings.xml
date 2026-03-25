@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name">Weight Controller</string>
-
     <string name="auth_login_subtitle">Access your account and log your weigh-ins</string>
     <string name="auth_register_subtitle">Create your account and save your progress in the cloud</string>
     <string name="auth_name">Name</string>
@@ -12,12 +11,11 @@
     <string name="auth_sex">Sex</string>
     <string name="auth_login_button">Sign in</string>
     <string name="auth_register_button">Sign up</string>
-    <string name="auth_switch_to_register">I don&#39;t have an account. I want to sign up</string>
+    <string name="auth_switch_to_register">I don\'t have an account. I want to sign up</string>
     <string name="auth_switch_to_login">I already have an account. I want to sign in</string>
     <string name="sex_male">Male</string>
     <string name="sex_female">Female</string>
     <string name="sex_other">Other</string>
-
     <string name="home_logout_content_description">Sign out</string>
     <string name="home_greeting">Hi, %1$s</string>
     <string name="home_subtitle">Track your progress in a simple way</string>
@@ -29,12 +27,11 @@
     <string name="home_current_weight_kg">Current weight (kg)</string>
     <string name="home_add_button">Add</string>
     <string name="home_history_title">Weight history</string>
-    <string name="home_empty_title">You haven&#39;t logged any weigh-ins yet</string>
+    <string name="home_empty_title">You haven\'t logged any weigh-ins yet</string>
     <string name="home_empty_subtitle">Add your first weight to start calculating your BMI.</string>
     <string name="home_weight_value_kg">%1$s kg</string>
     <string name="home_bmi_chip">BMI %1$s</string>
     <string name="home_delete_content_description">Delete</string>
-
     <string name="error_email_password_required">Email and password are required.</string>
     <string name="error_login_failed">Could not sign in.</string>
     <string name="error_complete_all_fields">Complete all fields.</string>

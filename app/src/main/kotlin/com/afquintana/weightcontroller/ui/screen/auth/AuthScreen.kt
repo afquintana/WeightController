@@ -78,7 +78,7 @@ fun AuthScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Image(
-                painter = painterResource(id = R.drawable.login_illustration),
+                painter = painterResource(id = R.drawable.auth_header),
                 contentDescription = null,
                 modifier = Modifier.size(180.dp),
                 contentScale = ContentScale.Fit,
