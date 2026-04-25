@@ -55,8 +55,8 @@ android {
         applicationId = "com.afquintana.weightcontroller"
         minSdk = 26
         targetSdk = 36
-        versionCode = ciVersionCode ?: 5
-        versionName = ciVersionName ?: "1.0.5"
+        versionCode = ciVersionCode ?: 6
+        versionName = ciVersionName ?: "1.0.6"
 
         vectorDrawables {
             useSupportLibrary = true
