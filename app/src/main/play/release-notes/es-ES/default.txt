@@ -1,0 +1,1 @@
+Nueva versión de Weight Controller con mejoras internas, correcciones y optimizaciones de estabilidad.
