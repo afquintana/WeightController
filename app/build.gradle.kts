@@ -1,4 +1,6 @@
 import com.github.triplet.gradle.androidpublisher.ReleaseStatus
+import java.util.Base64
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
@@ -14,6 +16,36 @@ plugins {
 
 val ciVersionCode = System.getenv("VERSION_CODE")?.toIntOrNull()
 val ciVersionName = System.getenv("VERSION_NAME")
+val googleServicesJsonFile = layout.projectDirectory.file("google-services.json").asFile
+val localProperties = Properties().apply {
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localPropertiesFile.inputStream().use { load(it) }
+    }
+}
+val googleServicesJsonBase64 = System.getenv("GOOGLE_SERVICES_JSON_BASE64")
+    ?: localProperties.getProperty("GOOGLE_SERVICES_JSON_BASE64")
+
+val restoreGoogleServicesJson by tasks.registering {
+    group = "firebase"
+    description = "Restores google-services.json from GOOGLE_SERVICES_JSON_BASE64 env/local.properties."
+
+    doLast {
+        if (googleServicesJsonFile.exists()) {
+            return@doLast
+        }
+
+        if (googleServicesJsonBase64.isNullOrBlank()) {
+            throw GradleException(
+                "google-services.json is missing. Add app/google-services.json manually " +
+                    "or provide GOOGLE_SERVICES_JSON_BASE64 in environment/local.properties."
+            )
+        }
+
+        val decoded = Base64.getDecoder().decode(googleServicesJsonBase64)
+        googleServicesJsonFile.writeBytes(decoded)
+    }
+}
 
 android {
     namespace = "com.afquintana.weightcontroller"
@@ -79,6 +111,10 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+}
+
+tasks.named("preBuild") {
+    dependsOn(restoreGoogleServicesJson)
 }
 
 play {
